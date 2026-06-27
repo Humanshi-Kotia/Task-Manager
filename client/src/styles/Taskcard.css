@@ -1,0 +1,19 @@
+.completed{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.taskcard{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h3{
+    width: 75%;
+}
+
+.taskcard button{
+    margin-right: 2%;
+    
+}

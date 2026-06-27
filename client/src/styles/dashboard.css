@@ -1,0 +1,41 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 110%;
+}
+
+* {
+    outline: red solid 1px;
+}
+
+.container{
+    display: flex;
+}
+
+.sidebar{
+    width: 18%;
+    min-height: 100vh;
+    padding: 20px;
+    background: black;
+    color:white;
+    font-size: 120%;
+}
+
+.sidebar ul{
+    list-style-type: none;
+}
+
+.sidebar li{
+    padding-bottom: 5%;
+}
+
+.content{
+    flex: 1;
+    padding: 20px;
+}
+
+.task-card {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 15px;
+}
