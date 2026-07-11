@@ -1,0 +1,68 @@
+.modal{
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    justify-content: center;
+    padding: 1%;
+    z-index: 1;
+    left: 15%;
+    right: 15%;
+    background-color: white;
+    border: 10px solid rgb(19, 19, 19);
+    border-radius: 30px;
+    font-size: 110%;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal .header{
+    width:100%;
+    text-align: center;    
+}
+
+.modal .header h2{
+    margin: auto;
+}
+
+.close{
+    position: relative;
+    width: fit-content;
+    float: right;
+    margin-right: 3%;
+    font-size: 120%;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+ 
+.modal label{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    align-items:center;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.modal input,
+.modal select{
+    width:100%;
+    padding:8px;
+    box-sizing:border-box;
+}
+
+.modal button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5% ;
+  font-size: 110%;
+  min-width: 160px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(19, 19, 19);
+  border-radius: 20px;
+}

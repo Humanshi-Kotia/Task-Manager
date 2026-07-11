@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 body{
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 110%;
 }
 
-* {
+/* * {
     outline: red solid 1px;
-}
+} */
 
 .container{
     display: flex;
@@ -34,8 +36,20 @@ body{
     padding: 20px;
 }
 
+.add_btn{
+    background: black;
+    color: white;
+    padding: 1%;
+    border-radius: 20px;
+    margin-left: 5%;
+}
+
 .task-card {
     border: 1px solid #ddd;
     margin-bottom: 10px;
     padding: 15px;
+}
+
+.content button{
+    margin-bottom: 2%;
 }

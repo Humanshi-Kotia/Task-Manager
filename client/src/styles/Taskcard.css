@@ -7,13 +7,62 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 2% 5%;
+    padding: 1%;
+    border: 3px solid black;
+    border-radius: 40px;
 }
 
-h3{
+.highlighted {
+    border: 2px solid rgb(28, 28, 58);
+    box-shadow: 0 0 10px rgb(28, 28, 58);
+}
+
+.title{
+    width:40%;
+    padding-left:2%;
+}
+
+.detail{
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+}
+
+.btn{
+    display: flex;
+    justify-content: space-around;
+    width: 20%;
+}
+
+.btn button{
+    background-color: black;
+    color: white;
+    padding: 2%;
+    font-size: 120%;
+}
+
+.btn .bi-x-square{
+    background-color: red;
+}
+
+.btn .bi-check-square{
+    background-color: green;
+}
+
+/* .details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 75%;
-}
+    padding-left: 1%;
+} */
 
-.taskcard button{
+/* .taskcard button{
     margin-right: 2%;
     
+} */
+
+.taskcard:hover{
+    background-color: rgb(234, 236, 237);
 }

@@ -1,13 +1,28 @@
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import TaskCard from "../components/Taskcard";
+import TaskModal from "../components/TaskModal"
 import { useState,useEffect } from "react";
 import axios from 'axios';
 
 function Dashboard(){
     const [tasks,setTasks]= useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [newTask,setNewTask]= useState("");
+    const [query,setQuery]=useState("");   //for search box
+
+    //adding filters
+    const [priorityFilter, setPriorityFilter] = useState("all");
+    const [categoryFilter, setCategoryFilter] = useState("all");
+    const [statusFilter, setStatusFilter] = useState("all");
+
+    // const [newTask,setNewTask]= useState({
+    //     title:"",
+    //     description:"",
+    //     priority:"",
+    //     category:"",
+    //     dueDate:""
+    // });
 
     useEffect(()=>{
         const fetchTasks=async()=>{
@@ -22,17 +37,15 @@ function Dashboard(){
         fetchTasks();
     },[]);
 
-    const addTask=async()=>{
+    const addTask=async(taskData)=>{
         try{
-            const response = await axios.post("http://localhost:5000/tasks",{
-                title:newTask,
-                description:""
-            });
+            const response = await axios.post("http://localhost:5000/tasks",taskData);
             // setTasks([...tasks,response.data]);
             setTasks(prevTasks => [...prevTasks, response.data]);
-            setNewTask("");
+            // setNewTask("");
         }catch(err){
-            console.error("Error adding task:",err);
+            console.log(err.response?.data);
+            console.log(err.message);
         }
     }
 
@@ -69,27 +82,49 @@ function Dashboard(){
     }
 };
 
+    function handleClick(){
+        setIsModalOpen(true);
+    }
+
+    function closeModal(){
+        setIsModalOpen(false);
+    }
+
+    const filteredTasks=tasks.filter(task=>{
+        return((priorityFilter === "all" || task.priority.toLowerCase() === priorityFilter) &&
+            (statusFilter === "all" || (task.completed?"completed":"pending")=== statusFilter)) &&
+            (categoryFilter === "all" || task.category.toLowerCase() === categoryFilter)
+    })
+
+    const categories = Array.from(new Set(tasks.map(task => task.category)));
+
     return(
         <div className="container">
-            <Sidebar/>
+            <Sidebar
+            priorityFilter={priorityFilter}
+            categoryFilter={categoryFilter}
+            statusFilter={statusFilter}
+            setPriorityFilter={setPriorityFilter}
+            setCategoryFilter={setCategoryFilter}
+            setStatusFilter={setStatusFilter}
+            categories={categories}/>
 
             <div className="content">
-                <Header/>
+                <Header
+                query={query}
+                setQuery={setQuery}/>
 
-                <input
-                type="text"
-                placeholder="Enter new Task"
-                value={newTask}
-                onChange={(e)=>setNewTask(e.target.value)}></input>
+                <button className="add_btn" onClick={handleClick}>+ Add Task</button>
 
-                <button onClick={addTask}>Add Task</button>
+                <TaskModal addTask={addTask} isOpen={isModalOpen} onClose={closeModal}/>
 
-                {tasks.map((task)=>(
+                {filteredTasks.map((task)=>(
                     <TaskCard 
-                    key={task.id} 
+                    key={task._id} 
                     task={task} 
                     deleteTask={deleteTask} 
-                    toggleComplete={toggleComplete}/>
+                    toggleComplete={toggleComplete}
+                    query={query}/>
                 ))}
             </div>
         </div>

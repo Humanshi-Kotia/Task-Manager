@@ -1,19 +1,27 @@
-function TaskCard({task, deleteTask, toggleComplete}){
+function TaskCard({task, deleteTask, toggleComplete,query}){
+    const isMatch=query.trim() !== "" && task.title.toLowerCase().includes(query.toLowerCase())
+
     return(
-        <div className="taskcard">
-            <h3 className={task.completed?"completed":""}>{task.title}</h3>
+        <div className={`taskcard ${isMatch ? "highlighted" : ""}`}>
+            <div className="title">
+                <h3 className={task.completed?"completed":""}>{task.title}</h3>
+            </div>
 
-            {/* <p>{task.priority}</p> */}
+            <div className="detail">
+                 <p>{task.priority}</p>
+                <p>{task.category}</p>
+            </div>
 
-            {/* <p>{task.completed?"Completed":"Pending"}</p> */}
-
-            <button onClick={()=>toggleComplete(task._id)}>
-                {task.completed?"Undo":"Completed"}
-            </button>
+            <div className="btn">
+                <button onClick={()=>toggleComplete(task._id)}>
+                {task.completed?<i className="bi bi-x-square"></i>:<i className="bi bi-check-square"></i>}
+                </button>
             
-            <button onClick={()=>deleteTask(task._id)}>Delete</button>
+                <button onClick={()=>deleteTask(task._id)}><i className="bi bi-trash"></i></button>
+            </div>   
+            
         </div>
     );
 }
 
-export default TaskCard;
+export default TaskCard; 

@@ -1,0 +1,15 @@
+.sidebar p{
+    color: grey;
+    font-size: 75%;
+}
+
+.sidebar select{
+    background-color: rgb(65, 65, 65);
+    width:100%;
+    font-size: 100%;
+}
+
+.sidebar select:hover,
+.sidebar select:focus{
+    background-color: rgb(34, 34, 34);
+}

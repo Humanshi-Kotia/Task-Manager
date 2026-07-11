@@ -1,0 +1,19 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.header h1{
+    margin-left: 3%;
+}
+
+.searchbox{
+    display: flex;
+    margin:1%;
+    padding: 1.5%;
+}
+
+.searchbox input{
+    border-radius: 50px;
+    padding: 0% 3%;
+}
