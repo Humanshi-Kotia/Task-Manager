@@ -1,0 +1,79 @@
+
+.login_container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 150%;   
+    background-color: #e0e7ff; 
+}
+
+.loginbox{
+    /* display: flex;
+    flex-direction: column; */
+    color: white;
+    background-color: black;
+    mask-size: 110%;
+    width: fit-content;
+    height: fit-content;
+    padding: 3%;
+    border-radius: 20px;
+}
+
+.loginbox h5{
+    text-align: center;
+    color: #6366f1;
+}
+
+.loginbox h2{
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.loginbox form{
+    display: flex;
+    flex-direction: column;
+    /* padding: 5%; */
+    /* margin: 5%; */
+}
+
+.loginbox form p{
+    text-align: left;
+    color: grey;
+    font-size: 50%;
+}
+
+.loginbox form input{
+    margin-bottom: 4%;
+    padding: 2%;
+    font-size: 60%;
+    border-radius: 10px;
+}
+
+.loginbox .create_account_link{
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color:  #cfe6ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.loginbox .create_account_link:hover{
+    color: #8ec5ff;
+    text-decoration: underline;
+}
+
+.login_btn{
+    padding: 3%;
+    margin-top: 10%;
+    border-radius: 10px;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
+
+
+

@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import TaskCard from "../components/Taskcard";
 import TaskModal from "../components/TaskModal"
 import { useState,useEffect } from "react";
-import axios from 'axios';
+import API from "../api/api";
 
 function Dashboard(){
     const [tasks,setTasks]= useState([]);
@@ -27,19 +27,19 @@ function Dashboard(){
     useEffect(()=>{
         const fetchTasks=async()=>{
             try{
-            const response= await axios.get("http://localhost:5000/tasks");
+            const response= await API.get("/tasks");
             console.log(response.data);
             setTasks(response.data);
         }catch(err){
-            console.error("Error fetching taska:",err)
+            console.error("Error fetching task:",err)
         }
         }
         fetchTasks();
-    },[]);
+    },[]);;
 
     const addTask=async(taskData)=>{
         try{
-            const response = await axios.post("http://localhost:5000/tasks",taskData);
+            const response = await API.post("/tasks",taskData);
             // setTasks([...tasks,response.data]);
             setTasks(prevTasks => [...prevTasks, response.data]);
             // setNewTask("");
@@ -51,13 +51,14 @@ function Dashboard(){
 
     const deleteTask = async (id) => {
     try {
-        await axios.delete(`http://localhost:5000/tasks/${id}`);
-
+        const response = await API.delete(`/tasks/${id}`);
+        console.log("Delete response:", response.data);
+        
         setTasks(prevTasks =>
             prevTasks.filter(task => task._id !== id)
         );
     } catch (err) {
-        console.error("Error deleting task:", err);
+        console.error("Error deleting task:", err.response?.data || err.message);
     }
 };
 
@@ -65,8 +66,8 @@ function Dashboard(){
     try {
         const task = tasks.find(task => task._id === id);
 
-        const response = await axios.put(
-            `http://localhost:5000/tasks/${id}`,
+        const response = await API.put(
+            `/tasks/${id}`,
             {
                 completed: !task.completed
             }

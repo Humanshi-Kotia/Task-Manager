@@ -10,7 +10,9 @@
     margin: 2% 5%;
     padding: 1%;
     border: 3px solid black;
-    border-radius: 40px;
+    border-left: 17px solid #6366f1;
+    border-radius: 25px;
+    background-color: #e0e7ff;
 }
 
 .highlighted {
@@ -36,10 +38,12 @@
 }
 
 .btn button{
-    background-color: black;
+    background-color: #6366f1;
+    border: none;
+    border-radius: 20%;
     color: white;
     padding: 2%;
-    font-size: 120%;
+    font-size: 150%;
 }
 
 .btn .bi-x-square{
@@ -64,5 +68,5 @@
 } */
 
 .taskcard:hover{
-    background-color: rgb(234, 236, 237);
+    background-color: rgb(208, 200, 240);
 }

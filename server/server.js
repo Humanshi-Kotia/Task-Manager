@@ -1,7 +1,12 @@
+const JWT_SECRET = "mysecretkey";
 const express = require('express');
 const cors = require('cors');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const mongoose=require('mongoose');
+const authMiddleware = require("./middleware/authMiddleware");
 const Task = require("./models/Task");
+const User = require("./models/User");
 
 const app = express();
 const port=5000;
@@ -9,20 +14,76 @@ const port=5000;
 app.use(express.json());
 app.use(cors());
 
-// const tasks=[{
-//     id:1,
-//     task:"dance",
-//     completed:false
-//     }]
+app.post('/register',async(req,res)=>{
+    try{
+        const {name,password,email}=req.body;
+        const existingUser = await User.findOne({email});
+        if (existingUser){
+            return res.status(400).json({
+                message: "User already exsists"
+            });}
 
-app.post('/tasks',async(req,res)=>{
+        const hashedPassword = await bcrypt.hash(password,10);
+
+        const user = new User({
+            name,
+            email,
+            password:hashedPassword,
+        })
+        console.log(user);
+        await user.save();
+        res.status(201).json({
+            message: "User registered successfully",
+            });
+        }
+    catch(err){
+        res.status(500).json({message:err.message});
+    }
+})
+
+app.post("/login",async(req,res)=>{
+    try{
+        const {email,password}=req.body;
+        const user=await User.findOne({email});
+
+        if(!user){
+            return res.status(400).json({message:"Wrong email or password"});
+        }
+
+        const isMatch= await bcrypt.compare(password,user.password);
+
+        if(!isMatch){
+            return res.status(400).json({message:"Wrong email or password"})
+        }
+        
+        const token=jwt.sign({
+            id: user._id,
+            email:user.email
+        },
+        JWT_SECRET,
+        {
+            expiresIn: "1d"
+        });
+
+        return res.status(200).json({
+            message: "Login successful",
+            token,
+        });
+
+    }catch(err){
+        res.status(500).json({message:err.message});
+    }
+});
+
+app.post('/tasks',authMiddleware,async(req,res)=>{
     try{
         const newTask=new Task({
         title:req.body.title,                             // new Task(req.body)
         description:req.body.description,
         priority:req.body.priority,
         category:req.body.category,
-        dueDate:req.body.dueDate
+        dueDate:req.body.dueDate,
+        user: req.user.id
         });
         await newTask.save();
         res.status(201).json(newTask);
@@ -35,9 +96,17 @@ app.post('/tasks',async(req,res)=>{
 }
 })
 
-app.put('/tasks/:id',async(req,res)=>{
+app.put('/tasks/:id',authMiddleware,async(req,res)=>{
     try{
-        const updatedTask=await Task.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators: true});
+        // const updatedTask=await Task.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators: true});
+        const updatedTask = await Task.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+            new: true,
+            runValidators: true
+        }
+    );
         if(!updatedTask){
             return res.status(404).json({message:"Task not found"});
             }
@@ -48,22 +117,26 @@ app.put('/tasks/:id',async(req,res)=>{
     }
 })
 
-app.delete('/tasks/:id',async(req,res)=>{
+app.delete('/tasks/:id',authMiddleware,async(req,res)=>{
     try{
-        const deletedTask = await Task.findByIdAndDelete(req.params.id);
-    if(!deletedTask){
-        return res.status(404).json({message:"Task not found"});
-        }
-    res.json(deletedTask)
+        const deletedTask = await Task.findOneAndDelete({
+        _id: req.params.id,
+        user: req.user.id
+        });
+        if(!deletedTask){
+            return res.status(404).json({message:"Task not found"});
+            }   
+        res.status(200).json({message:"Task deleted successfully", deletedTask});
     }
     catch(err){
+        console.error("Delete error:", err);
         res.status(500).json({message:err.message});
     }
 })
 
-app.get('/tasks',async(req,res)=>{
+app.get('/tasks',authMiddleware,async(req,res)=>{
     try{
-        const tasks=await Task.find();
+        const tasks=await Task.find({user: req.user.id});
         res.status(200).json(tasks);
     }
     catch(err){
@@ -84,7 +157,7 @@ const connectDB=async()=>{
         await mongoose.connect("mongodb://127.0.0.1:27017/taskmanager");
         console.log("connected to database");
     }
-    catch{
+    catch(err){
         console.log(err);
     }
 }

@@ -1,15 +1,21 @@
+.sidebar h2{
+    color: #6366f1;
+}
+
 .sidebar p{
-    color: grey;
+    color: #e0e7ff;
     font-size: 75%;
 }
 
 .sidebar select{
-    background-color: rgb(65, 65, 65);
+    background-color: #a3aed0;
+    border-radius: 10px;
+    padding: 1%;
     width:100%;
     font-size: 100%;
 }
 
 .sidebar select:hover,
 .sidebar select:focus{
-    background-color: rgb(34, 34, 34);
+    background-color: #e0e7ff;
 }
