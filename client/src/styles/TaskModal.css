@@ -67,3 +67,82 @@
   border: #6366f1;;
   border-radius: 20px;
 }
+
+@media screen and (max-width: 426px){
+    .modal {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  /* perfectly centered */
+    width: 80%;                         /* instead of left:15% right:15% */
+    max-width: 420px;                   /* cap width on larger screens */
+    padding: 16px 12px;                 /* fixed px instead of % */
+    z-index: 100;
+    background-color: #f5f5f5;
+    border: 3px solid #111;             /* thinner border — 10px was too heavy */
+    border-radius: 16px;
+    font-size: 100%;
+    max-height: 90vh;                   /* prevent overflow on small screens */
+    overflow-y: auto;                   /* scroll if content too tall */
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* title left, × right */
+    margin-bottom: 20px;
+}
+
+.modal .header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.close {
+    position: static;   /* remove relative positioning */
+    float: none;        /* remove float */
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+    background: none;
+    border: none;
+    padding: 4px 8px;
+}
+
+.modal label {
+    display: grid;
+    grid-template-columns: 90px 1fr;  /* narrower label column on mobile */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.modal button {
+    display: block;
+    margin: 8px auto 0;
+    padding: 10px 0;
+    font-size: 14px;
+    width: 100%;        /* full width button on mobile */
+    cursor: pointer;
+    color: white;
+    background: #6366f1;
+    border: none;
+    border-radius: 10px;
+}
+}

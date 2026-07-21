@@ -23,6 +23,7 @@
 .title{
     width:40%;
     padding-left:2%;
+    overflow: hidden;
 }
 
 .detail{
@@ -54,19 +55,24 @@
     background-color: green;
 }
 
-/* .details{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 75%;
-    padding-left: 1%;
-} */
-
-/* .taskcard button{
-    margin-right: 2%;
-    
-} */
-
 .taskcard:hover{
     background-color: rgb(208, 200, 240);
+}
+
+@media screen and (max-width: 426px){
+    .taskcard{
+        margin: 4% 1%;
+    }
+
+    .title{
+        width: 60%;
+    }
+
+    .detail{
+        display: none;
+    }
+
+    .btn{
+         width: 40%;
+    }
 }

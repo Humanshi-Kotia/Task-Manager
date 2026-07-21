@@ -16,6 +16,8 @@ function Dashboard(){
     const [categoryFilter, setCategoryFilter] = useState("all");
     const [statusFilter, setStatusFilter] = useState("all");
 
+    const [isSidebarOpen,setIsSidebarOpen]=useState(false)
+
     // const [newTask,setNewTask]= useState({
     //     title:"",
     //     description:"",
@@ -108,10 +110,14 @@ function Dashboard(){
             setPriorityFilter={setPriorityFilter}
             setCategoryFilter={setCategoryFilter}
             setStatusFilter={setStatusFilter}
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
             categories={categories}/>
 
             <div className="content">
                 <Header
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
                 query={query}
                 setQuery={setQuery}/>
 

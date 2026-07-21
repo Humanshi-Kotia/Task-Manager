@@ -1,6 +1,16 @@
-function Sidebar({priorityFilter,categoryFilter,statusFilter,setPriorityFilter,setCategoryFilter,setStatusFilter,categories}){
+import { useNavigate } from "react-router-dom";
+
+function Sidebar({priorityFilter,categoryFilter,statusFilter,setPriorityFilter,setCategoryFilter,setStatusFilter,categories,isSidebarOpen,setIsSidebarOpen}){
+    const navigate = useNavigate();
+    
+    function handleLogout() {
+        localStorage.removeItem("token");
+        navigate("/");
+    }
+
     return(
-        <div className="sidebar">
+        <div className={`sidebar ${isSidebarOpen?"open": ""}`}>
+            <i className="bi bi-x-square" onClick={()=>setIsSidebarOpen(false)}></i>
             <h2>Task Manager</h2>
 
             <p>PRIORITY</p>
@@ -25,6 +35,10 @@ function Sidebar({priorityFilter,categoryFilter,statusFilter,setPriorityFilter,s
                 <option value={"completed"}>Completed</option>
                 <option value={"pending"}>Pending</option>
             </select>
+
+            <div className="logout">
+                <button className="logout-btn" onClick={handleLogout}>logout <i class="bi bi-box-arrow-right"></i></button>
+            </div>
         </div>
     );
 }
