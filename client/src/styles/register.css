@@ -64,5 +64,9 @@
     color: white;
 }
 
+.register_btn:hover{
+    background-color:#363636;
+}
+
 
 
