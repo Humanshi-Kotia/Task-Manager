@@ -1,4 +1,5 @@
-const JWT_SECRET = "mysecretkey";
+require("dotenv").config();
+
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require("bcrypt");
@@ -9,7 +10,8 @@ const Task = require("./models/Task");
 const User = require("./models/User");
 
 const app = express();
-const port=5000;
+const JWT_SECRET = process.env.JWT_SECRET;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());
@@ -98,7 +100,6 @@ app.post('/tasks',authMiddleware,async(req,res)=>{
 
 app.put('/tasks/:id',authMiddleware,async(req,res)=>{
     try{
-        // const updatedTask=await Task.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators: true});
         const updatedTask = await Task.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -144,17 +145,9 @@ app.get('/tasks',authMiddleware,async(req,res)=>{
     }
 })
 
-// mongoose.connect("mongodb://127.0.0.1:27017/taskmanager")
-// .then(()=>{
-//     console.log("database connected")
-// })
-// .catch((err)=>{
-//     console.log("error connecting to the database")
-// })
-
 const connectDB=async()=>{
     try{
-        await mongoose.connect("mongodb://127.0.0.1:27017/taskmanager");
+        await mongoose.connect(process.env.MONGO_URI);
         console.log("connected to database");
     }
     catch(err){
